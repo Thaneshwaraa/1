@@ -1,0 +1,8 @@
+# Create new VM with 2GB RAM and 40GB disk
+New-VM -Name "MyVM" -MemoryStartupBytes 2GB -NewVHDPath "C:\VMs\MyVM.vhdx" -NewVHDSizeBytes 40GB -SwitchName "VirtualSwitch"
+
+# Attach ISO file
+Set-VMDvdDrive -VMName "MyVM" -Path "C:\ISOs\ubuntu.iso"
+
+# Start the VM
+Start-VM -Name "MyVM"

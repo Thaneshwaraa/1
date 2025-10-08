@@ -1,0 +1,34 @@
+# Install NFS
+sudo apt update
+sudo apt install nfs-kernel-server nfs-common -y
+
+# Create shared folder
+sudo mkdir -p /srv/nfs/share
+sudo chown nobody:nogroup /srv/nfs/share
+
+# Add a test file
+echo "Hello from VM1" | sudo tee /srv/nfs/share/hello.txt
+
+# Configure exports
+echo "/srv/nfs/share 192.168.1.106(rw,sync,no_subtree_check)" | sudo tee -a /etc/exports
+
+# Apply export
+sudo exportfs -a
+sudo systemctl restart nfs-kernel-server
+
+
+
+
+
+# Install NFS
+sudo apt update
+sudo apt install nfs-common -y
+
+# Create mount point
+sudo mkdir -p /mnt/nfs/share
+
+# Mount shared folder from VM1 (replace with VM1 IP if different)
+sudo mount 192.168.1.105:/srv/nfs/share /mnt/nfs/share
+
+# Verify
+ls /mnt/nfs/share
